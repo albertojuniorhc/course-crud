@@ -3,6 +3,9 @@ console.clear();
 
 const DB_FILE_PATH = "./core/db";
 
+const writeFS = fs.writeFileSync;
+const readFS = fs.readFileSync;
+
 interface ToDo {
   date: string;
   content: string;
@@ -10,7 +13,7 @@ interface ToDo {
 }
 
 function CLEAR_DB() {
-  fs.writeFileSync(DB_FILE_PATH, "");
+  writeFS(DB_FILE_PATH, "");
 }
 
 function create(content: string) {
@@ -22,12 +25,12 @@ function create(content: string) {
 
   const toDoList: Array<ToDo> = [...read(), toDo];
 
-  fs.writeFileSync(DB_FILE_PATH, JSON.stringify({ toDoList }, null, 2));
+  writeFS(DB_FILE_PATH, JSON.stringify({ toDoList }, null, 2));
   return content;
 }
 
 function read(): Array<ToDo> {
-  const dbString = fs.readFileSync(DB_FILE_PATH, "utf-8");
+  const dbString = readFS(DB_FILE_PATH, "utf-8");
   const db = JSON.parse(dbString || "{}");
 
   if (!db.toDoList) return [];
