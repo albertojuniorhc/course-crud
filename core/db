@@ -1,1 +1,14 @@
-Starting CRUD!
+{
+  "toDoList": [
+    {
+      "date": "2023-05-12T22:56:24.164Z",
+      "content": "1st ToDo - CRUD",
+      "done": false
+    },
+    {
+      "date": "2023-05-12T22:56:24.165Z",
+      "content": "2nd ToDo - CRUD",
+      "done": false
+    }
+  ]
+}
