@@ -1,24 +1,12 @@
-import fs from "fs";
 import { v4 as uuid } from "uuid";
-
-const DB_FILE_PATH = "./core/db";
-const writeFS = fs.writeFileSync;
-const readFS = fs.readFileSync;
-
-type UUID = string;
-
-interface ToDo {
-  id: UUID;
-  date: string;
-  content: string;
-  done: boolean;
-}
+import { DB_FILE_PATH, readFS, texts, writeFS } from "./constants";
+import type { UUID, ToDo } from "./types";
 
 function CLEAR_DB() {
   writeFS(DB_FILE_PATH, "");
 }
 
-function WRITE_DB(toDoList: Array<ToDo>): void {
+function WRITE_DB(toDoList: ToDo[]): void {
   writeFS(DB_FILE_PATH, JSON.stringify({ toDo: toDoList }, null, 2));
 }
 
@@ -30,13 +18,13 @@ function create(content: string): ToDo {
     done: false,
   };
 
-  const toDoList: Array<ToDo> = [...read(), toDo];
+  const toDoList: ToDo[] = [...read(), toDo];
 
   WRITE_DB(toDoList);
   return toDo;
 }
 
-function read(): Array<ToDo> {
+function read(): ToDo[] {
   const dbString = readFS(DB_FILE_PATH, "utf-8");
   const db = JSON.parse(dbString || "{}");
 
@@ -55,7 +43,7 @@ function update(id: UUID, partialToDo: Partial<ToDo>): ToDo {
     }
   });
 
-  if (!updatedToDo) throw new Error("ToDo not found");
+  if (!updatedToDo) throw new Error(texts.toDoNotFound);
 
   WRITE_DB(toDoList);
   return updatedToDo;
