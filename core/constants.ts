@@ -5,5 +5,5 @@ export const writeFS = fs.writeFileSync;
 export const readFS = fs.readFileSync;
 
 export const texts = {
-  toDoNotFound: "ToDo not found",
+    toDoNotFound: "ToDo not found",
 };
