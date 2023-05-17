@@ -7,11 +7,11 @@ export default function Page() {
             <GlobalStyles themeName="coolGrey" />
             <header>
                 <div className="typewriter">
-                    <h1>O que fazer hoje?</h1>
+                    <h1>What do you need/want to do?</h1>
                 </div>
                 <form>
-                    <input type="text" placeholder="Correr, Estudar..." />
-                    <button type="submit" aria-label="Adicionar novo item">
+                    <input type="text" placeholder="Run, Study..." />
+                    <button type="submit" aria-label="Add new item">
                         +
                     </button>
                 </form>
@@ -21,7 +21,7 @@ export default function Page() {
                 <form>
                     <input
                         type="text"
-                        placeholder="Filtrar lista atual, ex: Dentista"
+                        placeholder="Filter current list, ex: Dentist"
                     />
                 </form>
 
@@ -31,8 +31,8 @@ export default function Page() {
                             <th align="left">
                                 <input type="checkbox" disabled />
                             </th>
-                            <th align="left">Id</th>
-                            <th align="left">Conteúdo</th>
+                            <th align="left">ID</th>
+                            <th align="left">Content</th>
                             <th />
                         </tr>
                     </thead>
@@ -43,16 +43,9 @@ export default function Page() {
                                 <input type="checkbox" />
                             </td>
                             <td>d4f26</td>
-                            <td>
-                                Conteúdo de uma TODO Lorem ipsum dolor sit amet
-                                consectetur adipisicing elit. Eaque vero facilis
-                                obcaecati, autem aliquid eius! Consequatur eaque
-                                doloribus laudantium soluta optio odit,
-                                provident, ab voluptates doloremque voluptas
-                                recusandae aspernatur aperiam.
-                            </td>
+                            <td>ToDo content</td>
                             <td align="right">
-                                <button data-type="delete">Apagar</button>
+                                <button data-type="delete">Delete</button>
                             </td>
                         </tr>
 
@@ -62,13 +55,13 @@ export default function Page() {
                                 align="center"
                                 style={{ textAlign: "center" }}
                             >
-                                Carregando...
+                                Loading...
                             </td>
                         </tr>
 
                         <tr>
                             <td colSpan={4} align="center">
-                                Nenhum item encontrado
+                                No items found
                             </td>
                         </tr>
 
@@ -79,7 +72,7 @@ export default function Page() {
                                 style={{ textAlign: "center" }}
                             >
                                 <button data-type="load-more">
-                                    Carregar mais{" "}
+                                    Load more{" "}
                                     <span
                                         style={{
                                             display: "inline-block",
