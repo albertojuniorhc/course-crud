@@ -24,7 +24,7 @@ function create(content: string): ToDo {
     return toDo;
 }
 
-function read(): ToDo[] {
+export function read(): ToDo[] {
     const dbString = readFS(DB_FILE_PATH, "utf-8");
     const db = JSON.parse(dbString || "{}");
 
@@ -60,32 +60,36 @@ function deleteById(id: UUID): void {
 }
 
 //Simulation
-CLEAR_DB();
 
-const toDoDescriptions: string[] = [
-    "1st ToDo",
-    "2nd ToDo",
-    "3rd ToDo",
-    "4th ToDo",
-    "5th ToDo:",
-];
+const enableSimulation = false;
 
-toDoDescriptions.forEach((description) => {
-    create(description);
-});
+if (enableSimulation) {
+    CLEAR_DB();
+    const toDoDescriptions: string[] = [
+        "1st ToDo",
+        "2nd ToDo",
+        "3rd ToDo",
+        "4th ToDo",
+        "5th ToDo:",
+    ];
 
-const toDoUpdate = create("This is a ToDo to update");
+    toDoDescriptions.forEach((description) => {
+        create(description);
+    });
 
-setTimeout(() => {
-    update(toDoUpdate.id, { done: true });
-}, 1000);
+    // const toDoUpdate = create("This is a ToDo to update");
 
-setTimeout(() => {
-    updateContentById(toDoUpdate.id, "This is an updated ToDo");
-}, 2000);
+    // setTimeout(() => {
+    //     update(toDoUpdate.id, { done: true });
+    // }, 1000);
 
-setTimeout(() => {
-    deleteById(toDoUpdate.id);
-}, 3000);
+    // setTimeout(() => {
+    //     updateContentById(toDoUpdate.id, "This is an updated ToDo");
+    // }, 2000);
 
-console.log(read());
+    // setTimeout(() => {
+    //     deleteById(toDoUpdate.id);
+    // }, 3000);
+
+    console.log(read());
+}
