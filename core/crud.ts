@@ -61,10 +61,20 @@ function deleteById(id: UUID): void {
 
 //Simulation
 CLEAR_DB();
-create("1st ToDo");
-create("2nd ToDo");
-const toDoUpdate = create("3nd ToDo");
-create("4nd ToDo");
+
+const toDoDescriptions: string[] = [
+  "1st ToDo",
+  "2nd ToDo",
+  "3rd ToDo",
+  "4th ToDo",
+  "5th ToDo:",
+];
+
+toDoDescriptions.forEach((description) => {
+  create(description);
+});
+
+const toDoUpdate = create("This is a ToDo to update");
 
 setTimeout(() => {
   update(toDoUpdate.id, { done: true });
