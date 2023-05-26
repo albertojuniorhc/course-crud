@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { GlobalStyles } from "@ui/theme/GlobalStyles";
+import { toDoController } from "@ui/controller/todos";
+import type { TToDo } from "core/types";
+
+type THomeToDo = TToDo;
 
 export default function Page() {
+    const [toDoList, setToDoList] = React.useState<THomeToDo[]>([]);
+    console.log("🚀 ~ file: index.tsx:10 ~ Page ~ toDoList:", toDoList);
+
+    useEffect(() => {
+        toDoController.get().then((toDos) => setToDoList(toDos));
+    }, []);
+
     return (
         <main>
             <GlobalStyles themeName="coolGrey" />
@@ -38,18 +49,24 @@ export default function Page() {
                     </thead>
 
                     <tbody>
-                        <tr>
-                            <td>
-                                <input type="checkbox" />
-                            </td>
-                            <td>d4f26</td>
-                            <td>ToDo content</td>
-                            <td align="right">
-                                <button data-type="delete">Delete</button>
-                            </td>
-                        </tr>
+                        {toDoList.map((toDo) => {
+                            return (
+                                <tr key={toDo.id}>
+                                    <td>
+                                        <input type="checkbox" />
+                                    </td>
+                                    <td>{toDo.id.substring(0, 6)}</td>
+                                    <td>{toDo.content}</td>
+                                    <td align="right">
+                                        <button data-type="delete">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            );
+                        })}
 
-                        <tr>
+                        {/* <tr>
                             <td
                                 colSpan={4}
                                 align="center"
@@ -57,15 +74,15 @@ export default function Page() {
                             >
                                 Loading...
                             </td>
-                        </tr>
+                        </tr> */}
 
-                        <tr>
+                        {/* <tr>
                             <td colSpan={4} align="center">
                                 No items found
                             </td>
-                        </tr>
+                        </tr> */}
 
-                        <tr>
+                        {/* <tr>
                             <td
                                 colSpan={4}
                                 align="center"
@@ -84,7 +101,7 @@ export default function Page() {
                                     </span>
                                 </button>
                             </td>
-                        </tr>
+                        </tr> */}
                     </tbody>
                 </table>
             </section>
