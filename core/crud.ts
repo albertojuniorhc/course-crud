@@ -1,30 +1,30 @@
 import { v4 as uuid } from "uuid";
 import { DB_FILE_PATH, readFS, texts, writeFS } from "./constants";
-import type { UUID, ToDo } from "./types";
+import type { TUUID, TToDo } from "./types";
 
 function CLEAR_DB() {
     writeFS(DB_FILE_PATH, "");
 }
 
-function WRITE_DB(toDoList: ToDo[]): void {
+function WRITE_DB(toDoList: TToDo[]): void {
     writeFS(DB_FILE_PATH, JSON.stringify({ toDo: toDoList }, null, 2));
 }
 
-function create(content: string): ToDo {
-    const toDo: ToDo = {
+function create(content: string): TToDo {
+    const toDo: TToDo = {
         id: uuid(),
         date: new Date().toISOString(),
         content,
         done: false,
     };
 
-    const toDoList: ToDo[] = [...read(), toDo];
+    const toDoList: TToDo[] = [...read(), toDo];
 
     WRITE_DB(toDoList);
     return toDo;
 }
 
-export function read(): ToDo[] {
+export function read(): TToDo[] {
     const dbString = readFS(DB_FILE_PATH, "utf-8");
     const db = JSON.parse(dbString || "{}");
 
@@ -33,8 +33,8 @@ export function read(): ToDo[] {
     return db.toDo;
 }
 
-function update(id: UUID, partialToDo: Partial<ToDo>): ToDo {
-    let updatedToDo: ToDo | undefined;
+function update(id: TUUID, partialToDo: Partial<TToDo>): TToDo {
+    let updatedToDo: TToDo | undefined;
     const toDoList = read();
 
     toDoList.forEach((toDo) => {
@@ -49,11 +49,11 @@ function update(id: UUID, partialToDo: Partial<ToDo>): ToDo {
     return updatedToDo;
 }
 
-function updateContentById(id: UUID, content: string): ToDo {
+function updateContentById(id: TUUID, content: string): TToDo {
     return update(id, { content });
 }
 
-function deleteById(id: UUID): void {
+function deleteById(id: TUUID): void {
     const toDoList = read();
     const filteredToDoList = toDoList.filter((toDo) => toDo.id !== id);
     WRITE_DB(filteredToDoList);

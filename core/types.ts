@@ -1,7 +1,7 @@
-export type UUID = string;
+export type TUUID = string;
 
-export interface ToDo {
-    id: UUID;
+export interface TToDo {
+    id: TUUID;
     date: string;
     content: string;
     done: boolean;
