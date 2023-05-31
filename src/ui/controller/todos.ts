@@ -1,7 +1,13 @@
-async function get() {
-    return fetch("/api/todos").then(async (res) => {
-        const toDosFromAPI = JSON.parse(await res.text()).toDos;
-        return toDosFromAPI;
+import { toDoRepository } from "@ui/repository/todos";
+
+interface ToDoControllerGetParams {
+    page?: number;
+}
+
+async function get({ page }: ToDoControllerGetParams = {}) {
+    return toDoRepository.get({
+        page: page || 1,
+        pageSize: 5,
     });
 }
 

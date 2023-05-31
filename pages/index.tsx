@@ -1,16 +1,20 @@
 import React, { useEffect } from "react";
 import { GlobalStyles } from "@ui/theme/GlobalStyles";
 import { toDoController } from "@ui/controller/todos";
-import type { TToDo } from "core/types";
+import { texts } from "@ui/constants";
 
-type THomeToDo = TToDo;
+interface THomeToDo {
+    content: string;
+    id: string;
+    date: Date;
+}
 
 export default function Page() {
+    const [page, setPage] = React.useState(1);
     const [toDoList, setToDoList] = React.useState<THomeToDo[]>([]);
-    console.log("🚀 ~ file: index.tsx:10 ~ Page ~ toDoList:", toDoList);
 
     useEffect(() => {
-        toDoController.get().then((toDos) => setToDoList(toDos));
+        toDoController.get().then(({ toDos }) => setToDoList(toDos));
     }, []);
 
     return (
@@ -82,14 +86,17 @@ export default function Page() {
                             </td>
                         </tr> */}
 
-                        {/* <tr>
+                        <tr>
                             <td
                                 colSpan={4}
                                 align="center"
                                 style={{ textAlign: "center" }}
                             >
-                                <button data-type="load-more">
-                                    Load more{" "}
+                                <button
+                                    data-type="load-more"
+                                    onClick={() => setPage(page + 1)}
+                                >
+                                    {`Page ${page} - ${texts.loadMore} `}
                                     <span
                                         style={{
                                             display: "inline-block",
@@ -101,7 +108,7 @@ export default function Page() {
                                     </span>
                                 </button>
                             </td>
-                        </tr> */}
+                        </tr>
                     </tbody>
                 </table>
             </section>
