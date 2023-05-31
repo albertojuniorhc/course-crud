@@ -10,12 +10,20 @@ interface THomeToDo {
 }
 
 export default function Page() {
+    const [totalPages, setTotalPages] = React.useState(0);
     const [page, setPage] = React.useState(1);
     const [toDoList, setToDoList] = React.useState<THomeToDo[]>([]);
 
     useEffect(() => {
-        toDoController.get().then(({ toDos }) => setToDoList(toDos));
-    }, []);
+        toDoController.get({ page }).then(({ toDos, pages }) => {
+            setToDoList((oldToDoList) => {
+                return [...oldToDoList, ...toDos];
+            });
+            setTotalPages(pages);
+        });
+    }, [page]);
+
+    const hasMorePages = page < totalPages;
 
     return (
         <main>
@@ -86,29 +94,31 @@ export default function Page() {
                             </td>
                         </tr> */}
 
-                        <tr>
-                            <td
-                                colSpan={4}
-                                align="center"
-                                style={{ textAlign: "center" }}
-                            >
-                                <button
-                                    data-type="load-more"
-                                    onClick={() => setPage(page + 1)}
+                        {hasMorePages && (
+                            <tr>
+                                <td
+                                    colSpan={4}
+                                    align="center"
+                                    style={{ textAlign: "center" }}
                                 >
-                                    {`Page ${page} - ${texts.loadMore} `}
-                                    <span
-                                        style={{
-                                            display: "inline-block",
-                                            marginLeft: "4px",
-                                            fontSize: "1.2em",
-                                        }}
+                                    <button
+                                        data-type="load-more"
+                                        onClick={() => setPage(page + 1)}
                                     >
-                                        ↓
-                                    </span>
-                                </button>
-                            </td>
-                        </tr>
+                                        {`${texts.loadMore} `}
+                                        <span
+                                            style={{
+                                                display: "inline-block",
+                                                marginLeft: "4px",
+                                                fontSize: "1.2em",
+                                            }}
+                                        >
+                                            ↓
+                                        </span>
+                                    </button>
+                                </td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </section>
