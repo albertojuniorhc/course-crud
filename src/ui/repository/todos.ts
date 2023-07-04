@@ -1,3 +1,4 @@
+// Model/Schema
 interface ToDo {
     id: string;
     content: string;
